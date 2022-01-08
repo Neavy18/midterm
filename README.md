@@ -1,6 +1,26 @@
 RESOURCE WALL
 =========
 
+##HOW TO USE GIT
+1. Switch to your branch (within  VScode)
+
+2. Make your changes
+
+3. Commit changes (within VSCode)
+  click on source control, then select checkmark at the top
+
+4. As long as the code hasn't broken the app, merge to master
+  1. switch to master
+  2. make sure master is clean, aka no incoming changes. To make sure of this, lets do a pull --> select three dots, select pull.
+
+4.2 click on source control, then select the three dots, then select branch, then select merge.
+
+4.3 select your branch
+
+4.4 Push master
+
+4.5 Success!
+
 ## Project Setup
 
 The following steps are only for _one_ of the group members to perform.
