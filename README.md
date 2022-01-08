@@ -1,15 +1,15 @@
 RESOURCE WALL
 =========
 
-##HOW TO USE GIT
-1. Switch to your branch (within  VScode)
+##HOW TO UPDATE MASTER BRANCH
+1. Make sure you're in your working in your branch (within  VScode)
 
 2. Make your changes
 
 3. Commit changes (within VSCode)
   click on source control, then select checkmark at the top
 
-4. As long as the code hasn't broken the app, merge to master
+4. As long as the code hasn't broken the app, merge to master (See steps below)
   1. switch to master
   2. make sure master is clean, aka no incoming changes. To make sure of this, lets do a pull --> select three dots, select pull.
 
@@ -21,9 +21,10 @@ RESOURCE WALL
 
 4.5 Success!
 
-4.6 Sucess x 2!
+##HOW TO UPDATE YOUR PERSONAL WORKING BRANCH
+1. Make sure you're in the branch that you want the update to apply to
 
-4.7 Mikes test
+2. Select source control --> branch --> merge branch --> select the specific branch that has the update (in most cases, this will be master).
 
 ## Project Setup
 
