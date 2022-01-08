@@ -23,6 +23,8 @@ RESOURCE WALL
 
 4.6 Sucess x 2!
 
+4.7 Mikes test
+
 ## Project Setup
 
 The following steps are only for _one_ of the group members to perform.
