@@ -21,6 +21,8 @@ RESOURCE WALL
 
 4.5 Success!
 
+4.6 Sucess x 2!
+
 ## Project Setup
 
 The following steps are only for _one_ of the group members to perform.
