@@ -8,7 +8,7 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 const bodyParser = require('body-parser');
-const cors = require('cors');
+
 
 // PG database client/connection setup
 const { Pool } = require("pg");
@@ -24,7 +24,6 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors());
 
 app.use(
   "/styles",
@@ -39,18 +38,14 @@ app.use(express.static("public"));
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
-const usersRoutes = require("./routes/users");
-const widgetsRoutes = require("./routes/widgets");
 const categoriesRoutes = require("./routes/categories");
 const { append } = require("express/lib/response");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
-app.use("/api/users", usersRoutes(db));
-app.use("/api/widgets", widgetsRoutes(db));
 
 // API ROUTES
-app.use("/categories", categoriesRoutes);
+app.use("/", categoriesRoutes(db));
 
 // Note: mount other resources here, using the same pattern above
 
@@ -58,9 +53,9 @@ app.use("/categories", categoriesRoutes);
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 
-app.get("/", (req, res) => {
-  res.render("index");
-});
+// app.get("/", (req, res) => {
+//   res.render("index");
+// });
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
