@@ -20,22 +20,7 @@ $(document).ready(function () {
         if(!apiResponse.length) {
           console.log("The API response from app.js $ajax request was empty!")
         }
-        $.post({
 
-        })
       })
     });
-
-const insertResultBooks = (tableNumber = 1 , inputBox) => {
-
-  const queryString = `
-  INSERT INTO ${tableNumber} (name)
-  VALUES($1);`
-
-  return db
-    .query(queryString, [inputBox])
-    .then((data) => {
-      console.log("insert Result in app.js was succesful")
-    })
-
-});
+  });

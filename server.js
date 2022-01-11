@@ -1,3 +1,7 @@
+//import helper function
+const {tableSorter} = require("./db/helpers");
+const {insertResult} = require("./db/queries");
+
 // load .env data into process.env
 require("dotenv").config();
 
@@ -8,6 +12,7 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 const bodyParser = require('body-parser');
+
 
 // PG database client/connection setup
 const { Pool } = require("pg");
@@ -56,10 +61,12 @@ app.use(express.static("public"));
 // Separate them into separate routes files (see above).
 
 app.post("/api/fetch/wolfram", (req, res) => {
- 
+
+  const userInput = req.body.text
+
   const options = {
     json: true,
-    uri: `https://api.wolframalpha.com/v2/query?appid=39VL68-QT8V494VVW&input=${req.body.text}`
+    uri: `https://api.wolframalpha.com/v2/query?appid=39VL68-QT8V494VVW&input=${userInput}`
   };
   request(options)
     .then((result) => {
@@ -71,8 +78,13 @@ app.post("/api/fetch/wolfram", (req, res) => {
       console.log(typeof(jsonFormatted));
       return jsonFormatted;
     })
-    .then((jsonFormatted) => res.send(jsonFormatted.queryresult.datatypes));
-
+    .then((jsonFormatted) => {
+      console.log("this is the special string ---->", tableSorter(jsonFormatted.queryresult.datatypes))
+      insertResult(userInput, tableSorter(jsonFormatted.queryresult.datatypes), db)
+      //response should be the message we want to send
+      .then((response) => res.send(response))
+      //return res.send(jsonFormatted.queryresult.datatypes);
+    })
 });
 
 app.get("/", (req, res) => {
