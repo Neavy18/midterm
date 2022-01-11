@@ -8,13 +8,15 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 const bodyParser = require('body-parser');
-// ------> const cors = require('cors');
 
 // PG database client/connection setup
 const { Pool } = require("pg");
 const dbParams = require("./lib/db.js");
 const db = new Pool(dbParams);
 db.connect();
+
+const request = require("request-promise");
+const parser = require("xml2json");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -24,7 +26,6 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
-// ----> app.use(cors());
 
 app.use(
   "/styles",
@@ -39,18 +40,14 @@ app.use(express.static("public"));
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
-const usersRoutes = require("./routes/users");
-const widgetsRoutes = require("./routes/widgets");
 const categoriesRoutes = require("./routes/categories");
 const { append } = require("express/lib/response");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
-app.use("/api/users", usersRoutes(db));
-app.use("/api/widgets", widgetsRoutes(db));
 
 // API ROUTES
-// ------> app.use("/categories", categoriesRoutes);
+// app.use("/", categoriesRoutes(db));
 
 // Note: mount other resources here, using the same pattern above
 
@@ -58,19 +55,28 @@ app.use("/api/widgets", widgetsRoutes(db));
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 
-// -------> USE FOR TODAY FOR HTML TESTING PURPOSE <----------
 
-app.get("/homepage", (req, res) => {
+app.get("/api/fetchWolfram", (req, res) => {
+  const options = {
+    json: true,
+    uri: `https://api.wolframalpha.com/v2/query?appid=39VL68-QT8V494VVW&input=${req.body.text}`
+  };
+  request(options)
+    .then((result) => {
+      const xml = result;
+      const jsonFormatted = parser.toJson(xml);
+      return jsonFormatted;
+    })
+    .then((jsonFormatted) => res.send(jsonFormatted));
+});
+
+app.post("/api/fetch/wolfram", (req, res) => {
+  console.log("this in the POST: ------>", req.body);
+});
+
+app.get("/", (req, res) => {
   res.render("homepage");
 });
-app.get("/login", (req, res) => {
-  res.render("login_register");
-});
-app.get("/profile", (req, res) => {
-  res.render("profile");
-});
-
-
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
