@@ -2,13 +2,13 @@
 require("dotenv").config();
 
 // Web server config
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 30001;
 const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
 const bodyParser = require('body-parser');
-const cors = require('cors');
+// ------> const cors = require('cors');
 
 // PG database client/connection setup
 const { Pool } = require("pg");
@@ -24,7 +24,7 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors());
+// ----> app.use(cors());
 
 app.use(
   "/styles",
@@ -50,7 +50,7 @@ app.use("/api/users", usersRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
 
 // API ROUTES
-app.use("/categories", categoriesRoutes);
+// ------> app.use("/categories", categoriesRoutes);
 
 // Note: mount other resources here, using the same pattern above
 
@@ -58,9 +58,19 @@ app.use("/categories", categoriesRoutes);
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 
-app.get("/", (req, res) => {
-  res.render("index");
+// -------> USE FOR TODAY FOR HTML TESTING PURPOSE <----------
+
+app.get("/homepage", (req, res) => {
+  res.render("homepage");
 });
+app.get("/login", (req, res) => {
+  res.render("login_register");
+});
+app.get("/profile", (req, res) => {
+  res.render("profile");
+});
+
+
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
