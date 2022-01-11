@@ -1,8 +1,12 @@
+//import helper function
+const {tableSorter} = require("./db/helpers");
+const {insertResult} = require("./db/queries");
+
 // load .env data into process.env
 require("dotenv").config();
 
 // Web server config
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 30001;
 const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const app = express();
@@ -15,6 +19,9 @@ const { Pool } = require("pg");
 const dbParams = require("./lib/db.js");
 const db = new Pool(dbParams);
 db.connect();
+
+const request = require("request-promise");
+const parser = require("xml2json");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -38,24 +45,51 @@ app.use(express.static("public"));
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
-const toDoRoutes = require("./routes/todo");
-const { append } = require("express/lib/response");
+//const categoriesRoutes = require("./routes/categories");
+//const { append } = require("express/lib/response");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 
-//ROUTES
-// // app.post("/login", (req, res) => {
-
-// });
-app.use("/", toDoRoutes(db));
-
+// API ROUTES
+// app.use("/", categoriesRoutes(db));
 
 // Note: mount other resources here, using the same pattern above
 
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
+
+app.post("/api/fetch/wolfram", (req, res) => {
+
+  const userInput = req.body.text
+
+  const options = {
+    json: true,
+    uri: `https://api.wolframalpha.com/v2/query?appid=39VL68-QT8V494VVW&input=${userInput}`
+  };
+  request(options)
+    .then((result) => {
+      const xml = result;
+      const options = {
+        object: true
+      }
+      const jsonFormatted = parser.toJson(xml, options);
+      console.log(typeof(jsonFormatted));
+      return jsonFormatted;
+    })
+    .then((jsonFormatted) => {
+      console.log("this is the special string ---->", tableSorter(jsonFormatted.queryresult.datatypes))
+      insertResult(userInput, tableSorter(jsonFormatted.queryresult.datatypes), db)
+      //response should be the message we want to send
+      .then((response) => res.send(response))
+      //return res.send(jsonFormatted.queryresult.datatypes);
+    })
+});
+
+app.get("/", (req, res) => {
+  res.render("homepage");
+});
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
