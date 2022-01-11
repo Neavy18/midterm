@@ -40,8 +40,8 @@ app.use(express.static("public"));
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
-const categoriesRoutes = require("./routes/categories");
-const { append } = require("express/lib/response");
+//const categoriesRoutes = require("./routes/categories");
+//const { append } = require("express/lib/response");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -55,8 +55,8 @@ const { append } = require("express/lib/response");
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 
-
-app.get("/api/fetchWolfram", (req, res) => {
+app.post("/api/fetch/wolfram", (req, res) => {
+ 
   const options = {
     json: true,
     uri: `https://api.wolframalpha.com/v2/query?appid=39VL68-QT8V494VVW&input=${req.body.text}`
@@ -64,14 +64,15 @@ app.get("/api/fetchWolfram", (req, res) => {
   request(options)
     .then((result) => {
       const xml = result;
-      const jsonFormatted = parser.toJson(xml);
+      const options = {
+        object: true
+      }
+      const jsonFormatted = parser.toJson(xml, options);
+      console.log(typeof(jsonFormatted));
       return jsonFormatted;
     })
-    .then((jsonFormatted) => res.send(jsonFormatted));
-});
+    .then((jsonFormatted) => res.send(jsonFormatted.queryresult.datatypes));
 
-app.post("/api/fetch/wolfram", (req, res) => {
-  console.log("this in the POST: ------>", req.body);
 });
 
 app.get("/", (req, res) => {
