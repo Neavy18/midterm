@@ -38,24 +38,24 @@ app.use(express.static("public"));
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
-const categoriesRoutes = require("./routes/categories");
+const toDoRoutes = require("./routes/todo");
 const { append } = require("express/lib/response");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 
-// API ROUTES
-app.use("/", categoriesRoutes(db));
+//ROUTES
+// // app.post("/login", (req, res) => {
+
+// });
+app.use("/", toDoRoutes(db));
+
 
 // Note: mount other resources here, using the same pattern above
 
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
-
-// app.get("/", (req, res) => {
-//   res.render("index");
-// });
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
