@@ -2,19 +2,21 @@
 require("dotenv").config();
 
 // Web server config
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 30001;
 const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
 const bodyParser = require('body-parser');
 
-
 // PG database client/connection setup
 const { Pool } = require("pg");
 const dbParams = require("./lib/db.js");
 const db = new Pool(dbParams);
 db.connect();
+
+const request = require("request-promise");
+const parser = require("xml2json");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -45,7 +47,7 @@ const { append } = require("express/lib/response");
 // Note: Feel free to replace the example routes below with your own
 
 // API ROUTES
-app.use("/", categoriesRoutes(db));
+// app.use("/", categoriesRoutes(db));
 
 // Note: mount other resources here, using the same pattern above
 
@@ -53,9 +55,28 @@ app.use("/", categoriesRoutes(db));
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 
-// app.get("/", (req, res) => {
-//   res.render("index");
-// });
+
+app.get("/api/fetchWolfram", (req, res) => {
+  const options = {
+    json: true,
+    uri: `https://api.wolframalpha.com/v2/query?appid=39VL68-QT8V494VVW&input=${req.body.text}`
+  };
+  request(options)
+    .then((result) => {
+      const xml = result;
+      const jsonFormatted = parser.toJson(xml);
+      return jsonFormatted;
+    })
+    .then((jsonFormatted) => res.send(jsonFormatted));
+});
+
+app.post("/api/fetch/wolfram", (req, res) => {
+  console.log("this in the POST: ------>", req.body);
+});
+
+app.get("/", (req, res) => {
+  res.render("homepage");
+});
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
