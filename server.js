@@ -2,7 +2,7 @@
 require("dotenv").config();
 
 // Web server config
-const PORT = process.env.PORT || 30001;
+const PORT = process.env.PORT || 8080;
 const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const app = express();
@@ -40,14 +40,14 @@ app.use(express.static("public"));
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
-const categoriesRoutes = require("./routes/categories");
-const { append } = require("express/lib/response");
+// const todoRoutes = require("./routes/todo");
+// const { append } = require("express/lib/response");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 
 // API ROUTES
-// app.use("/", categoriesRoutes(db));
+// app.use("/", todoRoutes(db));
 
 // Note: mount other resources here, using the same pattern above
 
