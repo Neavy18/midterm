@@ -9,7 +9,7 @@ module.exports = (db) => {
   router.get("/", (req, res) => {
     db.query(`SELECT * FROM to_do_lists;`)
       .then((data) => {
-        const categories = data.rows;
+        const todo = data.rows;
         const templateVars = {categories};
         res.render("index", templateVars);
       })
@@ -17,6 +17,7 @@ module.exports = (db) => {
         res.status(500).json({ error: err.message });
       });
   });
+
   router.post("/", (req, res) => {
 
   });
