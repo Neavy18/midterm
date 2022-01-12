@@ -7,15 +7,13 @@ const specialObject = {
   Financial: 4,
 };
 
-const tableSorter = function(apiInput){
+const tableSorter = function (apiInput) {
+  const specialKey = sortingProducts(apiInput);
+  return specialObject[specialKey];
+};
 
- const specialKey = sortingProducts(apiInput)
+const sortingProducts = function (inputString) {
+  return inputString.split(",")[0];
+};
 
-  return specialObject[specialKey]
-}
-
-const sortingProducts = function(inputString){
-  return inputString.split(',')[0]
-}
-
-module.exports = {tableSorter};
+module.exports = { tableSorter };

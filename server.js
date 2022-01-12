@@ -1,26 +1,30 @@
 //import helper function
-const {tableSorter} = require("./db/helpers");
-const {insertResult} = require("./db/queries");
+const { tableSorter } = require("./db/helpers");
+const {
+  insertResult,
+  fetchToDoProducts,
+  fetchToDoBooks,
+} = require("./db/queries");
 
 // load .env data into process.env
 require("dotenv").config();
 
 // Web server config
-const PORT = process.env.PORT || 30001;
+const PORT = process.env.PORT || 8080;
 const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
+const request = require("request-promise");
+const parser = require("xml2json");
 
 // PG database client/connection setup
 const { Pool } = require("pg");
 const dbParams = require("./lib/db.js");
+const { Router } = require("express");
 const db = new Pool(dbParams);
 db.connect();
-
-const request = require("request-promise");
-const parser = require("xml2json");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -60,34 +64,59 @@ app.use(express.static("public"));
 // Separate them into separate routes files (see above).
 
 app.post("/api/fetch/wolfram", (req, res) => {
-
-  const userInput = req.body.text
-
+  const userInput = req.body.text;
   const options = {
     json: true,
-    uri: `https://api.wolframalpha.com/v2/query?appid=39VL68-QT8V494VVW&input=${userInput}`
+    uri: `https://api.wolframalpha.com/v2/query?appid=39VL68-QT8V494VVW&input=${userInput}`,
   };
   request(options)
     .then((result) => {
       const xml = result;
       const options = {
-        object: true
-      }
+        object: true,
+      };
       const jsonFormatted = parser.toJson(xml, options);
-      console.log(typeof(jsonFormatted));
+      console.log(typeof jsonFormatted);
       return jsonFormatted;
     })
     .then((jsonFormatted) => {
-      console.log("this is the special string ---->", tableSorter(jsonFormatted.queryresult.datatypes))
-      insertResult(userInput, tableSorter(jsonFormatted.queryresult.datatypes), db)
-      //response should be the message we want to send
-      .then((response) => res.send(response))
+      console.log(
+        "this is the special string ---->",
+        tableSorter(jsonFormatted.queryresult.datatypes)
+      );
+      insertResult(
+        userInput,
+        tableSorter(jsonFormatted.queryresult.datatypes),
+        db
+      )
+        //response should be the message we want to send
+        .then((response) => res.send(response));
       //return res.send(jsonFormatted.queryresult.datatypes);
-    })
+    });
 });
 
 app.get("/", (req, res) => {
   res.render("homepage");
+});
+
+//route that will handle the rendering of the toDo lists.
+app.get("/todos", (req, res) => {
+  // const tableData = {
+  //   books: [],
+  //   products: [],
+  //   movie: [],
+  //   restaurants: [],
+  // };
+  //This promise just runs x4 async functions to listen at same time
+  Promise.all([fetchToDoBooks(db), fetchToDoProducts(db)]).then((all) => {
+    const tableData = {
+      books: all[0],
+      products: all[1],
+    };
+
+    console.log("these should be your books:", all[0], all[1]);
+    return res.send(tableData);
+  });
 });
 
 app.listen(PORT, () => {
