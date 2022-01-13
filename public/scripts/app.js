@@ -73,7 +73,7 @@ $(document).ready(function () {
   let userInput = "";
   $(".categorysubmitter").click(function () {
     userInput = $("#to-do-input").val();
-
+    $("#to-do-input").val('')
     if (!userInput.length) {
       // console.log("Text area is empty");
     }
@@ -83,12 +83,12 @@ $(document).ready(function () {
       data: { text: encodeURI(`${userInput}`) },
     }).then((res) => {
       const newToDo = res;
-      console.log("this is apiResponse from ajax POST --->", newToDo);
+      //console.log("this is apiResponse from ajax POST --->", newToDo);
       if (!newToDo.length) {
         // console.log("The API response from app.js $ajax request was empty!");
       }
-      console.log("before loadTables Call ---->");
+      // console.log("before loadTables Call ---->");s
       appendToDoToTable(newToDo);
-    });
+    })
   });
 });
