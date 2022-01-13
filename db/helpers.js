@@ -13,7 +13,7 @@ const tableSorter = function (apiInput) {
 };
 
 const sortingProducts = function (inputString) {
-  return inputString.split(" ")[0];
+  return inputString.split(",")[0];
 };
 
 module.exports = { tableSorter };
