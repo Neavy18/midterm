@@ -1,34 +1,34 @@
-nav {
-  display: flex;
-  justify-content: space-between;
-  text-align: center;
-  height: 120px;
-  width: 100vw;
-  background-color: #39395f;
-  color: #FFFFFF;
-  padding: 0 1.5em;
-  position: sticky;
-   top: 0;
-   z-index: 100;
-
+/* Style for the whole nav bar section --> !important is essential to override Bootstrap */
+.navbar {
+  background-color: #cdf1f7 !important;
+  background-image: url("https://www.transparenttextures.com/patterns/snow.png");
+  height: 170px;
 }
 
-h1 {
-  font-family: "Bungee", cursive;
-  justify-content: center;
-  margin-top: .7em;
-  align-items: center;
+/* Style for the left part of nav bar section where name of app and quote are */
+.navbar-brand {
+  padding-top: 1rem;
+  padding-bottom: 1.2rem;
+  padding-left: 1rem;
+  font-family: Raleway;
+  font-size: 3rem;
 }
 
-.rightSideNav {
-  display: flex;
-  flex-direction: column;
-  font-family: "Source Sans Pro", sans-serif;
-  margin-top: 1.9em;
+/* Style for the right nav bar section where Welcome back username and Logout are */
+.user-message {
+  padding-right: 1.5rem;
+  font-family: Raleway;
+  font-family: 2rem;
 }
 
-.fa-angle-double-down {
-  color: #a9c25d;
+.welcome-back {
+  font-size: 1.5rem;
+}
+
+.fake-button {
+  width: 55%;
+  color: black !important;
+  margin-left: 40%;
 }
 
 

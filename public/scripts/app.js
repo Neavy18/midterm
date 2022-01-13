@@ -83,6 +83,7 @@ $(document).ready(function () {
   $(".categorysubmitter").click(function () {
     let userInput = "";
     userInput = $("#to-do-input").val();
+    $("#to-do-input").val('')
 
     if (!userInput.length) {
       // console.log("Text area is empty");

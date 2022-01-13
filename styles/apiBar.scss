@@ -1,0 +1,42 @@
+/* Style for the input box area */
+.submit-input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 1em;
+  background-color: #00badb;
+  background-image: url("https://www.transparenttextures.com/patterns/brick-wall-dark.png");;
+}
+
+/* Style for the input box specifically */
+#to-do-input {
+  width: 35rem;
+  height: 3rem;
+  padding-top: 0.75rem;
+  padding-bottom: 10px;
+  margin-top: 3.5rem;
+  margin-bottom: 1em;
+  font-family: Raleway;
+  font-size: 1.75em;
+  color: white;
+  outline: none;
+  border: none;
+  border-bottom: 2px solid white;
+  background-color: transparent;
+}
+
+input {
+  text-align: center;
+}
+
+#to-do-input:focus {
+  box-shadow: 5px 5px 5px 5px #0b6372;
+  border-bottom: none;
+}
+
+/* Adds shadow to the button when it is hovered over */
+.categorysubmitter:hover {
+  box-shadow: 5px 5px 8px 5px#0b6372;
+}
+
