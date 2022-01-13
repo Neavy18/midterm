@@ -37,9 +37,11 @@
       Books
     </div>
     <ul class="list-group list-group-flush" id="booksList">
-      <li class="list-group-item">An item</li>
-      <li class="list-group-item">A second item</li>
-      <li class="list-group-item">A third item</li>
+      <% for(const toDo of toDos) { %>
+        <% if(toDo.category_id === 1) { %>
+          <li class="list-group-item"> <%= toDo.name %> </li>
+        <% } %>
+      <% } %>
     </ul>
   </div>
 
@@ -50,9 +52,11 @@
       Products
     </div>
     <ul class="list-group list-group-flush" id="productsList">
-      <li class="list-group-item">An item</li>
-      <li class="list-group-item">A second item</li>
-      <li class="list-group-item">A third item</li>
+      <% for(const toDo of toDos) { %>
+        <% if(toDo.category_id === 2) { %>
+          <li class="list-group-item"> <%= toDo.name %> </li>
+        <% } %>
+      <% } %>
     </ul>
   </div>
 
@@ -63,9 +67,11 @@
       Movies
     </div>
     <ul class="list-group list-group-flush" id="moviesList">
-      <li class="list-group-item">An item</li>
-      <li class="list-group-item">A second item</li>
-      <li class="list-group-item">A third item</li>
+      <% for(const toDo of toDos) { %>
+        <% if(toDo.category_id === 3) { %>
+          <li class="list-group-item"> <%= toDo.name %> </li>
+        <% } %>
+      <% } %>
 
     </ul>
   </div>
@@ -77,9 +83,11 @@
       Restaurants
     </div>
     <ul class="list-group list-group-flush" id="restaurantsList">
-      <li class="list-group-item">An item</li>
-      <li class="list-group-item">A second item</li>
-      <li class="list-group-item">A third item</li>
+      <% for(const toDo of toDos) { %>
+        <% if(toDo.category_id === 4) { %>
+          <li class="list-group-item"> <%= toDo.name %> </li>
+        <% } %>
+      <% } %>
     </ul>
   </div>
 

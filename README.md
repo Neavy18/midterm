@@ -1,30 +1,16 @@
 RESOURCE WALL
 =========
 
-##HOW TO UPDATE MASTER BRANCH
-1. Make sure you're in your working in your branch (within  VScode)
+## Git Workflow
+1. New feature? Create a new branch.
+  --> git checkout -b "branch name" (dont use these quotes)
+2. Finished work on said branch? Push your branch
+  -->git push -u origin "branch name" (dont use these quotes)
+4. Go to Github, click pull request
+  --> team should receive an update regarding request
+5. Once team has confirmed that there are no conflicts, you're free to merge pull request. IF for whatever reason there are conflicts, go through them on a one by one basis.
+6. Git checkout master, then do git pull.
 
-2. Make your changes
-
-3. Commit changes (within VSCode)
-  click on source control, then select checkmark at the top
-
-4. As long as the code hasn't broken the app, merge to master (See steps below)
-  1. switch to master
-  2. make sure master is clean, aka no incoming changes. To make sure of this, lets do a pull --> select three dots, select pull.
-
-4.2 click on source control, then select the three dots, then select branch, then select merge.
-
-4.3 select your branch
-
-4.4 Push master
-
-4.5 Success!
-
-##HOW TO UPDATE YOUR PERSONAL WORKING BRANCH
-1. Make sure you're in the branch that you want the update to apply to
-
-2. Select source control --> branch --> merge branch --> select the specific branch that has the update (in most cases, this will be master).
 
 ## Project Setup
 

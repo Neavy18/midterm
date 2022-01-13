@@ -5,7 +5,7 @@ const {
   fetchToDoProducts,
   fetchToDoBooks,
   fetchToDoRestaurants,
-  fetchToDoMovies
+  fetchToDoMovies,
 } = require("./db/queries");
 
 // load .env data into process.env
@@ -85,7 +85,7 @@ app.post("/api/fetch/wolfram", (req, res) => {
       // console.log(
       //   "this is the special string ---->",
       // );
-      const formattedUserInput = userInput.split('%20').join(' ');
+      const formattedUserInput = userInput.split("%20").join(" ");
       // console.log("After format --->:", formattedUserInput);
       insertResult(
         formattedUserInput,
@@ -99,20 +99,29 @@ app.post("/api/fetch/wolfram", (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  res.render("homepage");
+  const queryString = `
+  SELECT * FROM to_do_lists
+  `;
+  db.query(queryString).then((data) => {
+    return res.render("homepage", {toDos: data.rows});
+  });
 });
 
 //route that will handle the rendering of the toDo lists.
 app.get("/todos", (req, res) => {
-
   //This promise just runs x4 async functions to listen at same time
 
-  Promise.all([fetchToDoBooks(db), fetchToDoProducts(db), fetchToDoMovies(db),fetchToDoRestaurants(db), ]).then((all) => {
+  Promise.all([
+    fetchToDoBooks(db),
+    fetchToDoProducts(db),
+    fetchToDoMovies(db),
+    fetchToDoRestaurants(db),
+  ]).then((all) => {
     const tableData = {
       books: all[0],
       products: all[1],
       movies: all[2],
-      restaurants: all[3]
+      restaurants: all[3],
     };
 
     // console.log("these should be your books:", all[0])
