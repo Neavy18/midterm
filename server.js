@@ -4,6 +4,8 @@ const {
   insertResult,
   fetchToDoProducts,
   fetchToDoBooks,
+  fetchToDoRestaurants,
+  fetchToDoMovies
 } = require("./db/queries");
 
 // load .env data into process.env
@@ -76,16 +78,17 @@ app.post("/api/fetch/wolfram", (req, res) => {
         object: true,
       };
       const jsonFormatted = parser.toJson(xml, options);
-      console.log(typeof jsonFormatted);
+      // console.log(typeof jsonFormatted);
       return jsonFormatted;
     })
     .then((jsonFormatted) => {
-      console.log(
-        "this is the special string ---->",
-        tableSorter(jsonFormatted.queryresult.datatypes)
-      );
+      // console.log(
+      //   "this is the special string ---->",
+      // );
+      const formattedUserInput = userInput.split('%20').join(' ');
+      // console.log("After format --->:", formattedUserInput);
       insertResult(
-        userInput,
+        formattedUserInput,
         tableSorter(jsonFormatted.queryresult.datatypes),
         db
       )
@@ -101,20 +104,21 @@ app.get("/", (req, res) => {
 
 //route that will handle the rendering of the toDo lists.
 app.get("/todos", (req, res) => {
-  // const tableData = {
-  //   books: [],
-  //   products: [],
-  //   movie: [],
-  //   restaurants: [],
-  // };
+
   //This promise just runs x4 async functions to listen at same time
-  Promise.all([fetchToDoBooks(db), fetchToDoProducts(db)]).then((all) => {
+
+  Promise.all([fetchToDoBooks(db), fetchToDoProducts(db), fetchToDoMovies(db),fetchToDoRestaurants(db), ]).then((all) => {
     const tableData = {
       books: all[0],
       products: all[1],
+      movies: all[2],
+      restaurants: all[3]
     };
 
-    console.log("these should be your books:", all[0], all[1]);
+    // console.log("these should be your books:", all[0])
+    // console.log("these should be your products:", all[1])
+    // console.log("these should be your movies:", all[2])
+    // console.log("these should be your restaurants:", all[3])
     return res.send(tableData);
   });
 });
