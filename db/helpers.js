@@ -6,16 +6,18 @@ const specialObject = {
   Movie: 3,
   Financial: 4,
 };
+//helper function that uses specialObject to determine what table the apiInput
+//should be placed into
+const tableSorter = function (apiInput) {
+  const specialKey = sortingProducts(apiInput);
+  return specialObject[specialKey];
+};
 
-const tableSorter = function(apiInput){
+const sortingProducts = function (inputString) {
+//   if(inputString.includes('%20')) {
+//   inputString.split('%20').join(' ')
+// }
+  return inputString.split(" ")[0];
+};
 
- const specialKey = sortingProducts(apiInput)
-
-  return specialObject[specialKey]
-}
-
-const sortingProducts = function(inputString){
-  return inputString.split(',')[0]
-}
-
-module.exports = {tableSorter};
+module.exports = { tableSorter };
