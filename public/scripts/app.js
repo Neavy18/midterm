@@ -3,10 +3,20 @@
 
 //Create actual item to be inserted in chosen table (i.e. "Harry Potter")
 const createListItem = function (toDo) {
-  const $listItem = $(`<li class="list-group-item">${toDo.name}</li>`);
+  const $listItem = $(`<li class="list-group-item">
+  <input type="checkbox" class="editButton" name="" id="${toDo.id}">
+  ${toDo.name}
+  </li>`);
   return $listItem;
 };
 
+//Function that handles deleting of listItem
+// const deleteListItem = function(toDo) {
+
+// };
+
+// jquery listens for event, after event occurs,
+// passback todo.id to backend, dbquery delete
 //
 const appendToDoToTable = function (toDo) {
   if (toDo.category_id === 1) {
@@ -70,8 +80,8 @@ const loadTables = function () {
 };
 
 $(document).ready(function () {
-  let userInput = "";
   $(".categorysubmitter").click(function () {
+    let userInput = "";
     userInput = $("#to-do-input").val();
 
     if (!userInput.length) {
@@ -83,12 +93,25 @@ $(document).ready(function () {
       data: { text: encodeURI(`${userInput}`) },
     }).then((res) => {
       const newToDo = res;
-      console.log("this is apiResponse from ajax POST --->", newToDo);
+      // console.log("this is apiResponse from ajax POST --->", newToDo);
       if (!newToDo.length) {
         // console.log("The API response from app.js $ajax request was empty!");
       }
       console.log("before loadTables Call ---->");
       appendToDoToTable(newToDo);
+    });
+  });
+  $(".editButton").click(function (event) {
+    console.log("This is your event response---->", event.target.id);
+    $.ajax({
+      url: "/completed",
+      method: "POST",
+      data: { id: event.target.id },
+    }).then((response) => {
+      if (response) {
+        console.log("Please run ----->", response);
+        $(this).parent().remove();
+      }
     });
   });
 });

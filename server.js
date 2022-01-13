@@ -98,12 +98,27 @@ app.post("/api/fetch/wolfram", (req, res) => {
     });
 });
 
+//this is rendering the initial database information
 app.get("/", (req, res) => {
   const queryString = `
-  SELECT * FROM to_do_lists
+  SELECT * FROM to_do_lists;
   `;
   db.query(queryString).then((data) => {
-    return res.render("homepage", {toDos: data.rows});
+    return res.render("homepage", { toDos: data.rows });
+  });
+});
+
+app.post("/completed", (req, res) => {
+  console.log(req.body);
+  const queryString = `
+  DELETE FROM to_do_lists
+  WHERE to_do_lists.id = ${req.body.id};
+  `;
+  db.query(queryString).then((result) => {
+    if (result) {
+      console.log("code should run");
+      res.status(200).send('ok');
+    }
   });
 });
 
