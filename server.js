@@ -94,7 +94,7 @@ app.post("/api/fetch/wolfram", (req, res) => {
       )
         //response should be the message we want to send
         .then((response) => res.send(response));
-      //return res.send(jsonFormatted.queryresult.datatypes);
+      console.log("checkout------>:", jsonFormatted.queryresult.datatypes);
     });
 });
 
