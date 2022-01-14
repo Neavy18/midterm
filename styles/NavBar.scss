@@ -1,8 +1,9 @@
 /* Style for the whole nav bar section --> !important is essential to override Bootstrap */
 .navbar {
-  background-color: #cdf1f7 !important;
-  background-image: url("https://www.transparenttextures.com/patterns/snow.png");
+  background-color: #df9185 !important;
+  background-image: url("https://www.transparenttextures.com/patterns/brick-wall-dark.png");
   height: 170px;
+  color: white !important;
 }
 
 /* Style for the left part of nav bar section where name of app and quote are */
@@ -12,6 +13,7 @@
   padding-left: 1rem;
   font-family: Raleway;
   font-size: 3rem;
+  color: white !important;
 }
 
 /* Style for the right nav bar section where Welcome back username and Logout are */
@@ -19,16 +21,24 @@
   padding-right: 1.5rem;
   font-family: Raleway;
   font-family: 2rem;
+  color: white !important;
 }
 
 .welcome-back {
   font-size: 1.5rem;
+  color: white !important;
 }
 
 .fake-button {
   width: 55%;
-  color: black !important;
   margin-left: 40%;
+  color: black !important;
+  background-color: #c69b90 !important;
+}
+
+.fake-button:hover {
+  box-shadow: 5px 5px 8px 5px#bd7f76;
+  background-color: #fae5df;
 }
 
 

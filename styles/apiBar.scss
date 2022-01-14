@@ -5,8 +5,7 @@
   align-items: center;
   justify-content: center;
   padding-bottom: 1em;
-  background-color: #00badb;
-  background-image: url("https://www.transparenttextures.com/patterns/brick-wall-dark.png");;
+  // background-color: #f5cac2 !important;
 }
 
 /* Style for the input box specifically */
@@ -19,11 +18,12 @@
   margin-bottom: 1em;
   font-family: Raleway;
   font-size: 1.75em;
-  color: white;
+  color: black;
   outline: none;
   border: none;
-  border-bottom: 2px solid white;
-  background-color: transparent;
+  border-radius: 10px;
+  // border-bottom: 2px solid white;
+  // background-color: transparent;
 }
 
 input {
@@ -31,12 +31,16 @@ input {
 }
 
 #to-do-input:focus {
-  box-shadow: 5px 5px 5px 5px #0b6372;
+  box-shadow: 5px 5px 5px 5px #f6beb6;
   border-bottom: none;
 }
 
+
+.categorysubmitter {
+  background-color: #f7ab9f !important;
+}
 /* Adds shadow to the button when it is hovered over */
 .categorysubmitter:hover {
-  box-shadow: 5px 5px 8px 5px#0b6372;
+  box-shadow: 5px 5px 8px 5px#df9a90;
 }
 
