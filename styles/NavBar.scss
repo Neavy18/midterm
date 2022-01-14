@@ -1,7 +1,7 @@
 /* Style for the whole nav bar section --> !important is essential to override Bootstrap */
 .navbar {
   background-color: #df9185 !important;
-  background-image: url("https://www.transparenttextures.com/patterns/brick-wall-dark.png");
+  // background-image: url("https://www.transparenttextures.com/patterns/brick-wall-dark.png");
   height: 170px;
   color: white !important;
 }
@@ -12,8 +12,8 @@
   padding-bottom: 1.2rem;
   padding-left: 1rem;
   font-family: Raleway;
-  font-size: 3rem;
-  color: white !important;
+  font-size: 3.5rem;
+  color: #303179 !important;
 }
 
 /* Style for the right nav bar section where Welcome back username and Logout are */
@@ -21,24 +21,24 @@
   padding-right: 1.5rem;
   font-family: Raleway;
   font-family: 2rem;
-  color: white !important;
+  color: #303179 !important;
 }
 
 .welcome-back {
   font-size: 1.5rem;
-  color: white !important;
+  color: #303179 !important;
 }
 
 .fake-button {
   width: 55%;
   margin-left: 40%;
-  color: black !important;
-  background-color: #c69b90 !important;
+  color: #303179 !important;
+  background-color: #f6beb6 !important;
 }
 
 .fake-button:hover {
   box-shadow: 5px 5px 8px 5px#bd7f76;
-  background-color: #fae5df;
+  background-color: #f6beb6;
 }
 
 
